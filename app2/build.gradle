@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
     defaultConfig {
-        applicationId "com.tsu.testapp"
-        minSdkVersion 24
+        applicationId "com.tsu.tshttp"
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
