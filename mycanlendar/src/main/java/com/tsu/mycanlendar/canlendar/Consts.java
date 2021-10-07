@@ -20,5 +20,6 @@ public class Consts {
     public static final String CODE_POP_SMTP_QQ = "wtcekqjoncwucbdj";
     public static final String CODE_EXCHANGE_QQ = "isfknimvnodkbjij";
     public static final String CODE_IMAP_SMTP_QQ = "uumlbbvrrevacbea";
-    public static final String CODE_IMAP_SMTP_126 = "QCTAYAMYOZLPBJSH";
+    public static final String CODE1_IMAP_SMTP_126 = "QCTAYAMYOZLPBJSH";
+    public static final String CODE2_IMAP_SMTP_126 = "JYPBLROYLZXJLNYI";
 }

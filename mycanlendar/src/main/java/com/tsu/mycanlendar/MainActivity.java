@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    ImapTest.getInstance().getInputBox();
+                    ImapTest.getInstance().getInputBoxBy126();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

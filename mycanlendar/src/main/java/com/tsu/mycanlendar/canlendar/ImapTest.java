@@ -28,10 +28,24 @@ public class ImapTest {
         return imapTest;
     }
 
-    public void getInputBox() throws Exception{
+    public void getInputBoxByQQ() throws Exception{
         Session session = Session.getDefaultInstance(new Properties());
         Store store = session.getStore("imaps");
-        store.connect("imap.qq.com" , 993 , Consts.EMAIL_ADDR_QQ , Consts.CODE_IMAP_SMTP_QQ);
+        store.connect(Consts.IMAP_HOST_QQ , Consts.IMAP_PORT_QQ , Consts.EMAIL_ADDR_QQ , Consts.CODE_IMAP_SMTP_QQ);
+        Folder inbox = store.getFolder("INBOX");
+        inbox.open(Folder.READ_ONLY);
+
+        Message [] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN),false));
+        Log.d(TAG , "messages length : "+messages.length);
+        for(Message message : messages){
+            Log.d(TAG , message.getSubject()+" , description : "+message.getDescription());
+        }
+    }
+
+    public void getInputBoxBy126() throws Exception{
+        Session session = Session.getDefaultInstance(new Properties());
+        Store store = session.getStore("imaps");
+        store.connect(Consts.IMAP_HOST_126 , 993 , Consts.EMAIL_ADDR_126 , Consts.CODE2_IMAP_SMTP_126);
         Folder inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_ONLY);
 
