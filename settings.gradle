@@ -1,3 +1,4 @@
+include ':mycanlendar'
 include ':tshttp'
 include ':app2'
 include ':app'
