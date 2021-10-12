@@ -80,16 +80,26 @@ public class CalendarManager {
             int count = userCursor.getCount();
             Log.d(TAG, "checkCalendarAccount count : " + count);
             if (count > 0) {
+                int calID = -1;
                 userCursor.moveToFirst();
                 while(!userCursor.isAfterLast()){
+                    int calId = userCursor.getInt(userCursor.getColumnIndex(CalendarContract.Calendars._ID));
                     String accountName = userCursor.getString(userCursor.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME));
                     String displayName = userCursor.getString(userCursor.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
-                    Log.d(TAG , "ACCOUNT_NAME : "+accountName+" , DISPLAY_NAME : "+displayName);
+                    if(!TextUtils.isEmpty(displayName) && "tsu2021@qq.com".equals(displayName)){
+                        calID = calId;
+                    }
+                    String accountType  = userCursor.getString(userCursor.getColumnIndex(CalendarContract.Calendars.ACCOUNT_TYPE));
+                    Log.d(TAG , "CalID : "+calID+" , ACCOUNT_NAME : "+accountName+" , DISPLAY_NAME : "+displayName+" , TYPE : "+accountType);
                     userCursor.moveToNext();
                 }
 
-                userCursor.moveToFirst();
-                return userCursor.getInt(userCursor.getColumnIndex(CalendarContract.Calendars._ID));
+                if(calID == -1){
+                    userCursor.moveToFirst();
+                    calID = userCursor.getInt(userCursor.getColumnIndex(CalendarContract.Calendars._ID));
+                }
+                Log.d(TAG , "calID : "+calID);
+                return calID;
             } else {
                 return -1;
             }
@@ -170,6 +180,34 @@ public class CalendarManager {
         }
     }
 
+    public void queryCalendarEvent(Context context){
+        if(context  == null){
+            return ;
+        }
+
+        Cursor eventCursor = context.getContentResolver().query(Uri.parse(CALENDAR_EVENT_URL) , null ,null,null,null);
+
+        try{
+            if(eventCursor == null){
+                return ;
+            }
+            int count = eventCursor.getCount();
+            Log.d(TAG , "count : "+count);
+            if(count > 0){
+                for(eventCursor.moveToFirst();!eventCursor.isAfterLast();eventCursor.moveToNext()) {
+                    @SuppressLint("Range") String eventTitle = eventCursor.getString(eventCursor.getColumnIndex("title"));
+                    @SuppressLint("Range") int id = eventCursor.getInt(eventCursor.getColumnIndex(CalendarContract.Events._ID));
+                    @SuppressLint("Range") int calId = eventCursor.getInt(eventCursor.getColumnIndex(CalendarContract.Events.CALENDAR_ID));
+                    Log.d(TAG , "id : "+id+" , title : "+eventTitle+" , calId : "+calId);
+                }
+            }
+        }finally {
+            if(eventCursor!=null){
+                eventCursor.close();
+            }
+        }
+    }
+
     public void deleteCalendarEvent(Context context , String title){
         if(context == null){
             return ;
@@ -180,19 +218,19 @@ public class CalendarManager {
             if(eventCursor ==null){
                 return;
             }
-            if(eventCursor.getCount() >0){
+            if(eventCursor.getCount() >0) {
                 //遍历所有事件，找到title跟需要查询的title一样的项
-                for(eventCursor.moveToFirst();!eventCursor.isAfterLast();eventCursor.moveToNext()){
+                for (eventCursor.moveToFirst(); !eventCursor.isAfterLast(); eventCursor.moveToNext()) {
                     @SuppressLint("Range") String eventTitle = eventCursor.getString(eventCursor.getColumnIndex("title"));
-                    if(!TextUtils.isEmpty(title) && title.equals(eventTitle)){
+                    if (!TextUtils.isEmpty(title) && title.equals(eventTitle)) {
                         @SuppressLint("Range") int id = eventCursor.getInt(eventCursor.getColumnIndex(CalendarContract.Calendars._ID));//取得id
+                        Log.d(TAG, "find a event : " + id);
                         Uri deleteUri = ContentUris.withAppendedId(Uri.parse(CALENDAR_EVENT_URL), id);
-                        int rows = context.getContentResolver().delete(deleteUri , null,null);
-                        if(rows == -1){   //事件删除失败
-                            return ;
+                        int rows = context.getContentResolver().delete(deleteUri, null, null);
+                        if (rows == -1) {   //事件删除失败
+                            return;
                         }
                     }
-
                 }
             }
         }finally {

@@ -57,8 +57,11 @@ public class ExchangeTest {
         service.setTraceEnabled(true);
         try {
             //service.setUrl(new URI("http://"+SERVICE_HOST+"/EWS/Exchange.asmx"));
-            service.setUrl(new URI("http://ex.qq.com/EWS/Exchange.asmx"));
+            //service.autodiscoverUrl(EMAIL_ADDRESS);
+            service.setUrl(new URI("http://ex.qq.com"));
         } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch(Exception e){
             e.printStackTrace();
         }
 
@@ -114,6 +117,9 @@ public class ExchangeTest {
 
 
     public void sendMessage() throws Exception{
+        if(service == null){
+            initService();
+        }
         EmailMessage message = new EmailMessage(service);
         message.getToRecipients().add("l66566@126.com");
         message.setSubject("Hello world!");

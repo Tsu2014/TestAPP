@@ -2,6 +2,9 @@ package com.tsu.mycanlendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private Button button4;
 
     private CalendarManager calendarManager;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        context = getApplicationContext();
         initView();
         setListeners();
         calendarManager = CalendarManager.getInstance();
@@ -73,8 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void action1(){
         Log.d(TAG , "action1");
-        int result = calendarManager.checkCalendarAccount(this.getApplicationContext());
-        textView.setText("result : "+result);
+        /*long startTime = System.currentTimeMillis()+3600*1000;
+        //calendarManager.addCalendarEvent(context , "Test02" , "hello test02" , startTime , 1);
+        calendarManager.queryCalendarEvent(context);
+        textView.setText("result : ");*/
+        AccountManager accountManager = AccountManager.get(this);
+        Account [] accounts = accountManager.getAccounts();
+        for(Account account : accounts){
+            Log.d(TAG , "name : "+account.name+" , type : "+account.type);
+        }
     }
 
     private void action2(){
@@ -85,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     //ExchangeTest.getInstance().getCanlendar();
                     ExchangeTest.getInstance().sendMessage();
+                    //calendarManager.deleteCalendarEvent(context , "Test01");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -101,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     //SmtpTest.getInstance().sendBy126();
-                    SmtpTest.getInstance().sendByQQ();
+                    //SmtpTest.getInstance().sendByQQ();
+                    ImapTest.getInstance().testFolderByQQ();//.getInputBoxByQQ();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import javax.mail.Flags;
 import javax.mail.Folder;
+import javax.mail.FolderNotFoundException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -36,11 +37,35 @@ public class ImapTest {
         return imapTest;
     }
 
+    public void testFolderByQQ() throws Exception{
+        Session session = Session.getDefaultInstance(new Properties());
+        Store store = session.getStore("imaps");
+        store.connect(Consts.IMAP_HOST_QQ , Consts.IMAP_PORT_QQ , Consts.EMAIL_ADDR_QQ , Consts.CODE_IMAP_SMTP_QQ);
+        Folder folder = store.getFolder("calendar");
+
+        if(folder.exists()){
+            Log.d(TAG , "Name : "+folder.getName()+" , FullName : "+folder.getFullName()+" , count : "+folder.getMessageCount());
+        }
+        /*Folder [] folders = folder.list("*");
+        int count = folders.length;
+        Log.d(TAG , "count : "+count);
+        for(Folder f : folders){
+            Log.d(TAG , "Name : "+f.getName()+" , FullName : "+f.getFullName()+" , count : "+f.getMessageCount());
+        }*/
+        /*int count = folder.getMessageCount();
+        Log.d(TAG , "count : "+count);
+        Message [] messages = folder.getMessages();
+        for(Message message : messages){
+            Log.d(TAG , "Message : "+message.getSubject());
+        }*/
+    }
+
     public void getInputBoxByQQ() throws Exception{
         Session session = Session.getDefaultInstance(new Properties());
         Store store = session.getStore("imaps");
         store.connect(Consts.IMAP_HOST_QQ , Consts.IMAP_PORT_QQ , Consts.EMAIL_ADDR_QQ , Consts.CODE_IMAP_SMTP_QQ);
         Folder inbox = store.getFolder("INBOX");
+
         inbox.open(Folder.READ_ONLY);
 
         Message [] messages = inbox.search(new FlagTerm(new Flags(Flags.Flag.SEEN),false));
