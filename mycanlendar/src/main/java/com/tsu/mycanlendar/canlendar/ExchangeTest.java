@@ -21,6 +21,8 @@ import microsoft.exchange.webservices.data.ExchangeService;
 import microsoft.exchange.webservices.data.ExchangeVersion;
 import microsoft.exchange.webservices.data.FindItemsResults;
 import microsoft.exchange.webservices.data.FolderId;
+import microsoft.exchange.webservices.data.Item;
+import microsoft.exchange.webservices.data.ItemView;
 import microsoft.exchange.webservices.data.Mailbox;
 import microsoft.exchange.webservices.data.MessageBody;
 import microsoft.exchange.webservices.data.ServiceLocalException;
@@ -31,9 +33,10 @@ public class ExchangeTest {
 
     private static final String TAG = "ExchangeTest";
     private static ExchangeTest exchangeTest;
-    private final static String SERVICE_HOST = "ex.qq.com";
-    private static final String EMAIL_ADDRESS = "tsu2021@qq.com";
-    private static final String PASSWORD = "isfknimvnodkbjij";
+    private final static String SERVICE_HOST = "outlook.office365.com";//"ex.qq.com";
+    private static final String EMAIL_ADDRESS = "tsu202110@outlook.com";//"tsu2021@qq.com";
+    private static final String PASSWORD = "SUsu7905";//"isfknimvnodkbjij";
+    private static final String DOMAIN = "outlook.com";//"qq.com";
 
     private ExchangeService service = null;
 
@@ -50,15 +53,15 @@ public class ExchangeTest {
     }
 
     public void initService(){
-        service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-        ExchangeCredentials credentials = new WebCredentials(EMAIL_ADDRESS , PASSWORD);
+        service = new ExchangeService(ExchangeVersion.Exchange2010_SP1);
+        ExchangeCredentials credentials = new WebCredentials(EMAIL_ADDRESS , PASSWORD , DOMAIN);
 
         service.setCredentials(credentials);
-        service.setTraceEnabled(true);
+        //service.setTraceEnabled(true);
         try {
-            //service.setUrl(new URI("http://"+SERVICE_HOST+"/EWS/Exchange.asmx"));
+            service.setUrl(new URI("https://"+SERVICE_HOST+"/EWS/Exchange.asmx"));
             //service.autodiscoverUrl(EMAIL_ADDRESS);
-            service.setUrl(new URI("http://ex.qq.com"));
+            //service.setUrl(new URI("http://ex.qq.com"));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         } catch(Exception e){
@@ -67,7 +70,25 @@ public class ExchangeTest {
 
     }
 
-    public void getCanlendar(){
+    public void getCalendar() throws Exception {
+        if(service ==null){
+            initService();
+        }
+
+        FindItemsResults<Item> result = service.findItems(WellKnownFolderName.Calendar , new ItemView(10));
+        Log.d(TAG , "result count : "+result.getTotalCount());
+        for(Item item : result){
+            if(item instanceof Appointment){
+                Appointment temp = (Appointment)item;
+                Log.d(TAG , "title : "+temp.getSubject()+" , start : "+temp.getStart()+" , end : "+temp.getEnd()+" , rrule : ");
+            }else{
+                Log.d(TAG , "item : "+item.getSubject());
+            }
+
+        }
+    }
+
+    public void getCalendar1(){
         if(service ==null){
             initService();
         }

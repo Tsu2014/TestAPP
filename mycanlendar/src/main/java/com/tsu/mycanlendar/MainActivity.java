@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    //ExchangeTest.getInstance().getCanlendar();
-                    ExchangeTest.getInstance().sendMessage();
+                    ExchangeTest.getInstance().getCalendar1();
+                    //ExchangeTest.getInstance().sendMessage();
                     //calendarManager.deleteCalendarEvent(context , "Test01");
                 } catch (Exception e) {
                     e.printStackTrace();
