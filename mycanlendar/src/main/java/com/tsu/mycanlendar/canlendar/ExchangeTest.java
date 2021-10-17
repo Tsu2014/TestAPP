@@ -33,10 +33,10 @@ public class ExchangeTest {
 
     private static final String TAG = "ExchangeTest";
     private static ExchangeTest exchangeTest;
-    private final static String SERVICE_HOST = "outlook.office365.com";//"ex.qq.com";
-    private static final String EMAIL_ADDRESS = "tsu202110@outlook.com";//"tsu2021@qq.com";
-    private static final String PASSWORD = "SUsu7905";//"isfknimvnodkbjij";
-    private static final String DOMAIN = "outlook.com";//"qq.com";
+    private final static String SERVICE_HOST = "ex.qq.com";//"outlook.office365.com";//
+    private static final String EMAIL_ADDRESS = "tsu2021@qq.com";//"tsu202110@outlook.com";//
+    private static final String PASSWORD = "isfknimvnodkbjij";//"SUsu7905";//
+    private static final String DOMAIN = "qq.com";//"outlook.com";//
 
     private ExchangeService service = null;
 
