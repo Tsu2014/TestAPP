@@ -39,23 +39,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(mLocationListener);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-
-        mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
-        if(null != mLocationClient){
-            mLocationClient.setLocationOption(mLocationOption);
-            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
-            mLocationClient.stopLocation();
-            mLocationClient.startLocation();
-        }
+        initLocation();
 
         initViews();
         setListeners();
+    }
+    
+    private void initLocation(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //初始化定位
+                mLocationClient = new AMapLocationClient(getApplicationContext());
+                //设置定位回调监听
+                mLocationClient.setLocationListener(mLocationListener);
+                //初始化AMapLocationClientOption对象
+                mLocationOption = new AMapLocationClientOption();
+
+                mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+                if(null != mLocationClient){
+                    mLocationClient.setLocationOption(mLocationOption);
+                    //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+                    mLocationClient.stopLocation();
+                    mLocationClient.startLocation();
+                }
+            }
+        }).start();
     }
 
     private void initViews(){
