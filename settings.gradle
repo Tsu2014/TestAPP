@@ -1,6 +1,9 @@
+include ':sokhttp'
+include ':forcedark'
 include ':tsumap'
 include ':mycanlendar'
 include ':tshttp'
 include ':app2'
 include ':app'
 rootProject.name = "TestAPP"
+include ':kapp'

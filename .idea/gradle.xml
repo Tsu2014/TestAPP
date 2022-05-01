@@ -4,7 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="13" />
@@ -13,13 +13,15 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app2" />
+            <option value="$PROJECT_DIR$/forcedark" />
+            <option value="$PROJECT_DIR$/kapp" />
             <option value="$PROJECT_DIR$/mycanlendar" />
+            <option value="$PROJECT_DIR$/sokhttp" />
             <option value="$PROJECT_DIR$/tshttp" />
             <option value="$PROJECT_DIR$/tsumap" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

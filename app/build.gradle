@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '30.0.3'
+    compileSdk 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.tsu.testapp"
         minSdkVersion 24
-        targetSdkVersion 31
+        targetSdk 28
         versionCode 1
         versionName "1.0"
 
@@ -25,6 +25,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    flavorDimensions 'default'
+    file('channel.txt').readLines().each {
+        channel ->
+            productFlavors.create(channel,{
+                dimension "default"
+                //替换manifest中的值
+                manifestPlaceholders = [channel1:channel]
+            })
     }
 }
 
