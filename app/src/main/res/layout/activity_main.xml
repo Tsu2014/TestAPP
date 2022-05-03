@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/main_textview1"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/hight_custom"
         android:text="Hello World!"
         android:gravity="center"
         android:textSize="30sp"
@@ -17,7 +17,7 @@
     <Button
         android:id="@+id/main_button1"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/hight_custom"
         android:text="Button1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
